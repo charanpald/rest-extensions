@@ -23,7 +23,7 @@ class GeoJSONField(serializers.Field):
 
         output_str = geojson.dumps(obj)
 
-        if self.geo_type != None and obj["type"].lower() != self.geo_type.lower():
+        if self.geo_type is not None and obj["type"].lower() != self.geo_type.lower():
             raise serializers.ValidationError("Expected " + self.geo_type + " type but got " + obj["type"])
 
         return output_str

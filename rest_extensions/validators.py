@@ -45,6 +45,7 @@ class ModelValidator(object):
             raise serializers.ValidationError("A valid identifier is required.")
         return value
 
+
 class GeoJSONValidator(object):
     def __init__(self, geo_type):
         self.geo_type = geo_type
@@ -64,7 +65,7 @@ class GeoJSONValidator(object):
         if "coordinates" not in json_dict.keys():
             raise serializers.ValidationError("Missing coordinates field")
 
-        if self.geo_type != None and json_dict["type"].lower() != self.geo_type.lower():
+        if self.geo_type is not None and json_dict["type"].lower() != self.geo_type.lower():
             raise serializers.ValidationError("Expected " + self.geo_type + " type but got " + json_dict["type"])
 
         coordinates = json_dict["coordinates"][0]

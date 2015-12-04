@@ -1,6 +1,7 @@
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 
+
 def get_model_object(Model, pk, user=None, permission=None):
     """
     Return a model instance if the user has the correct permission. If one of
