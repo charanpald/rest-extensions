@@ -11,11 +11,17 @@ class ReadOnlyModelViewSet(ViewSet):
     """
 
     def get_queryset(self):
-        return self.model_class.objects.all()
+        if hasattr(self, "order_key"):
+            return self.model_class.objects.order_by(self.order_key)
+        else:
+            return self.model_class.objects.all()
 
     def list(self, request, format=None):
         instances = self.get_queryset()
-        serializer = self.serializer_class(instances, many=True)
+        try:
+            serializer = self.list_serializer_class(instances, many=True)
+        except:
+            serializer = self.serializer_class(instances, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk, format=None):
